@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     
     # Third party app
     'user_auth',
+    "crispy_forms",
+    "crispy_bootstrap5",
     
 ]
 
@@ -58,7 +60,7 @@ ROOT_URLCONF = 'institure_management.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
