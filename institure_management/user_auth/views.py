@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib import messages
@@ -16,11 +17,17 @@ def login_view(request):
         messages.warning(request, 'Invalid username or password!')
     context = {
         'form_data' : form_data
-        
     }
     
     return render(request, 'login.html', context)
 
+@login_required
+def logout_view(request):
+    logout(request)
+    messages.success(request, 'User Logged Out Successfully.')
+    return redirect('login_view')
+
+@login_required
 def dashboard_view(request):
     
     return render(request, 'dashboard.html')
