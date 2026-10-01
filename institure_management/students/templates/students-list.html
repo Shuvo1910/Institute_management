@@ -7,4 +7,33 @@
 
 {% block body %}
     <h1>Students List</h1>
+    <table class="table table-success table-striped">
+        <thead>
+            <tr>
+                <th>SL</th>
+                <th>Name</th>
+                <th>Roll</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for data in students_list  %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.roll}}</td>
+                    <td>
+                        <img src="{{data.image.url}}" width="50px" alt="">
+                    </td>
+                    <td>
+                        <a href="">Edit</a>
+                        <a href="">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+                
+        </tbody>
+    </table>
 {% endblock body %}
