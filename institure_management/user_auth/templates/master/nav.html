@@ -10,7 +10,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#">Student</a>
+            <a class="nav-link" href="{% url 'students_list' %}">Student</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Teacher</a>
@@ -24,9 +24,6 @@
         {% else %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'login_view' %}">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="register_view">Register</a>
           </li>
         {% endif %}
       </ul>

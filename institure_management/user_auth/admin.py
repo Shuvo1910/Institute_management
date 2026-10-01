@@ -1,4 +1,4 @@
 from django.contrib import admin
 from user_auth.models import *
 
-admin.site.register([UserInfoModel, StudentModel, TeacherModel])
+admin.site.register([UserInfoModel, TeacherModel])
