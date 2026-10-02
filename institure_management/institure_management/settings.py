@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Third party app
     'user_auth',
     'students',
+    'teachers',
     "crispy_forms",
     "crispy_bootstrap5",
     

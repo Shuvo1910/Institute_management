@@ -12,7 +12,7 @@ def login_view(request):
             user = form_data.get_user()
             if user:
                 login(request, user)
-                messages.success(request, 'User Logged In Successfully.')
+                messages.success(request, 'User Logged In Successfully :)')
                 return redirect('dashboard_view')
         messages.warning(request, 'Invalid username or password!')
     context = {
@@ -25,7 +25,7 @@ def login_view(request):
 @login_required
 def logout_view(request):
     logout(request)
-    messages.success(request, 'User Logged Out Successfully.')
+    messages.success(request, 'User Logged Out Successfully :(')
     return redirect('login_view')
 
 @login_required
