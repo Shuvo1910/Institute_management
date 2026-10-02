@@ -3,21 +3,26 @@
     <a class="navbar-brand">LFS</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav"> 
+        
         {% if request.user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'dashboard_view' %}">Dashboard</a>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'students_list' %}">Student</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Teacher</a>
-          </li>
+          {% if request.user.user_type == 'Admin' %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'students_list' %}">Student</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Teacher</a>
+            </li>
+          {% endif %}
+
           <li class="nav-item">
             <a class="nav-link" href="#">Courses</a>
           </li>
+          
           <li class="nav-item">
             <a class="nav-link" href="{% url 'logout_view' %}">Logout</a>
           </li>
@@ -26,6 +31,7 @@
             <a class="nav-link" href="{% url 'login_view' %}">Login</a>
           </li>
         {% endif %}
+        
       </ul>
     </div>
   </div>
