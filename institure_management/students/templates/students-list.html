@@ -25,12 +25,13 @@
                     <td>{{data.name}}</td>
                     <td>{{data.roll}}</td>
                     <td>
-                        <img src="{{data.image.url}}" width="50px" alt="">
+                        <img src="{{data.image.url}}" width="50px" height="50px" alt="">
                     </td>
                     <td>
-                        <a href="">Edit</a>
-                        <a href="">Delete</a>
+                        <a href="{% url 'edit_student' data.id %}" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="{% url 'delete_student' data.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this student?');">Delete</a>
                     </td>
+
                 </tr>
             {% endfor %}
                 
