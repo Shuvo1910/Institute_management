@@ -14,7 +14,7 @@ class CourseModel(models.Model):
     category = models.ForeignKey(
         CourseCategoryModel,
         on_delete = models.SET_NULL,
-        related_name = 'course_category'
+        related_name = 'course_category',
         null = True,
     )
     course_fee = models.FloatField(null=True)
