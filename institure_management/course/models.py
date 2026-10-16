@@ -2,8 +2,7 @@ from django.db import models
 from user_auth.models import UserInfoModel
 
 class CourseCategoryModel(models.Model):
-    name = models.CharField(max_length=40)
-    
+    name = models.CharField(max_length=100)
     
     def __str__(self):
         return f'{self.name}'
@@ -22,11 +21,12 @@ class CourseModel(models.Model):
     course_thumbnail = models.ImageField(upload_to = 'media/course_img', null=True)
     credit = models.FloatField(null=True)
     created_by = models.ForeignKey(
-        UserInfoModel,
-        on_delete = models.SET_NULL,
-        related_name = 'course_creator',
-        null = True
+        'user_auth.UserInfoModel',
+        on_delete=models.SET_NULL,
+        related_name='course_creator',
+        null=True
     )
     
     def __str__(self):
         return f'{self.title}'
+
