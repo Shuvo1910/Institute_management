@@ -1,4 +1,5 @@
 from django.db import models
+from students.models import StudentModel
 from user_auth.models import UserInfoModel
 
 class CourseCategoryModel(models.Model):
@@ -29,4 +30,23 @@ class CourseModel(models.Model):
     
     def __str__(self):
         return f'{self.title}'
+    
+class CourseEnrollModel(models.Model):
+    student = models.ForeignKey(
+        StudentModel,
+        on_delete=models.SET_NULL,
+        related_name='student_enrollment',
+        null=True
+    )
+    course = models.ForeignKey(
+        CourseModel,
+        on_delete=models.CASCADE,
+        null=True
+    )
+    admission_fee = models.FloatField(null=True)
+    pay = models.FloatField(null=True)
+    due = models.FloatField(null=True)
+    
+    def __str__(self):
+        return f'{self.student.name}'
 

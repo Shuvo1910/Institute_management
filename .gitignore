@@ -1,0 +1,37 @@
+# Database
+db.sqlite3
+
+# Media and Uploads
+/media/
+
+# Python caching
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments (Virtual Environments)
+.venv/
+venv/
+env/
+ENV/
+bin/
+lib/
+include/
+
+# Environment variables / Secrets
+.env
+*.env
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS generated files
+Thumbs.db
+desktop.ini
+.DS_Store
