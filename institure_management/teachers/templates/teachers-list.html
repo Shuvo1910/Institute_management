@@ -7,7 +7,7 @@
 
 {% block body %}
     <h1>Teachers List</h1>
-    <table class="table table-success table-striped">
+    <div class="table-responsive"><table class="table table-hover align-middle">
         <thead>
             <tr>
                 <th>SL</th>
@@ -36,6 +36,7 @@
             {% endfor %}
                 
         </tbody>
-    </table>
+    </table></div>
 <a href="{% url 'add_teachers' %}" class="btn btn-success">Add Teacher</a>
 {% endblock body %}
+
