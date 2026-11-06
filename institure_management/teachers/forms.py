@@ -3,6 +3,18 @@ from django.db import transaction
 from teachers.models import TeacherModel
 from user_auth.models import UserInfoModel
 
+class TeacherProfileForm(forms.ModelForm):
+    class Meta:
+        model = TeacherModel
+        fields = '__all__'
+        exclude = ['user']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
+
 class TeacherForm(forms.ModelForm):
     username = forms.CharField(max_length=200)
     email = forms.EmailField()

@@ -6,5 +6,9 @@ urlpatterns = [
     path('teachers_regester/', add_teachers, name='add_teachers'),
     path('edit-teacher/<int:pk>/', edit_teachers, name='edit_teachers'),
     path('delete-teacher/<int:pk>/', delete_teachers, name='delete_teachers'),
+    
+        #------------------------ Student Profile ------------------
+    path('teacher_profile/', teacher_profile_view, name='teacher_profile_view'),
+    path('update_teacher_profile/', update_teacher_profile, name='update_teacher_profile'),
 
 ]

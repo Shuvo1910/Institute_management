@@ -5,6 +5,33 @@ from teachers.forms import *
 from django.contrib import messages
 
 @login_required
+def teacher_profile_view(request):
+    return render(request, 'teacher_profile_view.html')
+                  
+@login_required
+def update_teacher_profile(request):
+    teacher = request.user.teacher_profile
+    
+    if request.method == 'POST':
+        form_data = TeacherProfileForm(request.POST, request.FILES, instance=teacher)
+        if form_data.is_valid():
+            form_data.save()
+            messages.success(request, 'Profile Updated Successfully  :) ')
+            return redirect('teacher_profile_view')
+    else:
+        form_data = TeacherProfileForm(instance=teacher)
+    
+    context = {
+        'teacher': teacher,
+        'form_data': form_data,
+        'page_title': 'My Profile',
+        'form_title': 'Update Profile',
+        'form_btn': 'Update',
+    }    
+    
+    return render(request, 'master/base-form.html', context)
+
+@login_required
 def teachers_list(request):
     if request.user.user_type == 'Admin':   
         teachers_list = TeacherModel.objects.all()

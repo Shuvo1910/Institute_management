@@ -5,6 +5,33 @@ from students.forms import *
 from django.contrib import messages
 
 @login_required
+def student_profile_view(request):
+    return render(request, 'student_profile_view.html')
+                  
+@login_required
+def update_student_profile(request):
+    student = request.user.student_profile
+    
+    if request.method == 'POST':
+        form_data = StudentProfileForm(request.POST, request.FILES, instance=student)
+        if form_data.is_valid():
+            form_data.save()
+            messages.success(request, 'Profile Updated Successfully  :) ')
+            return redirect('student_profile_view')
+    else:
+        form_data = StudentProfileForm(instance=student)
+    
+    context = {
+        'student': student,
+        'form_data': form_data,
+        'page_title': 'My Profile',
+        'form_title': 'Update Profile',
+        'form_btn': 'Update',
+    }    
+    
+    return render(request, 'master/base-form.html', context)
+
+@login_required
 def students_list(request):
     if request.user.user_type == 'Admin':
         students_list = StudentModel.objects.all()

@@ -1,0 +1,55 @@
+{% extends 'master/base.html' %}
+
+{% block title %}
+    Profile View
+{% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4 bg-light">
+                <h2 class="text-center mb-4">My Account Profile</h2>
+                
+                <div class="text-center mb-4">
+                    {% if request.user.teacher_profile.image %}
+                        <img src="{{ request.user.teacher_profile.image.url }}" class="img-thumbnail rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+                    {% else %}
+                        <div class="alert alert-secondary d-inline-block p-4 rounded-circle" style="width: 150px; height: 150px; line-height: 70px;">
+                            No Image
+                        </div>
+                    {% endif %}
+                </div>
+
+                <table class="table table-borderless">
+                    <tr>
+                        <th>Username:</th>
+                        <td>{{ request.user.username }}</td>
+                    </tr>
+                    <tr>
+                        <th>Account Type:</th>
+                        <td><span class="badge bg-primary">{{ request.user.user_type }}</span></td>
+                    </tr>
+                    <tr>
+                        <th>Full Name:</th>
+                        <td>{{ request.user.teacher_profile.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Phone:</th>
+                        <td>{{ request.user.teacher_profile.phone }}</td>
+                    </tr>
+                    <tr>
+                        <th>Address:</th>
+                        <td>{{ request.user.teacher_profile.address }}</td>
+                    </tr>
+                </table>
+
+                <div class="text-center mt-3">
+                    <a href="{% url 'update_teacher_profile' %}" class="btn btn-warning w-100">Update Profile</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
