@@ -5,6 +5,8 @@ from django.contrib.auth import login, logout
 from django.contrib import messages
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard_view')
     form_data = AuthenticationForm()
     if request.method == 'POST':
         form_data = AuthenticationForm(request, request.POST)

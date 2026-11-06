@@ -1,37 +1,41 @@
-# Database
-db.sqlite3
-
-# Media and Uploads
-/media/
-
-# Python caching
+# ---------------- Python ----------------
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Environments (Virtual Environments)
-.venv/
+# ---------------- Django ----------------
+# Local database
+db.sqlite3
+db.sqlite3-journal
+*.sqlite3
+
+# User uploaded files
+media/
+
+# Collected static files
+staticfiles/
+
+# Logs
+*.log
+
+# NOTE: Do NOT ignore migrations/ - Django migration files should be committed.
+
+# ---------------- Virtual environments ----------------
 venv/
+.venv/
 env/
 ENV/
-bin/
-lib/
-include/
 
-# Environment variables / Secrets
+# ---------------- Secrets / environment variables ----------------
 .env
 *.env
 
-# IDEs and Editors
+# ---------------- IDEs / Editors ----------------
 .vscode/
 .idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
 *.swp
 
-# OS generated files
+# ---------------- OS generated files ----------------
+.DS_Store
 Thumbs.db
 desktop.ini
-.DS_Store
