@@ -2,51 +2,63 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-    Course Enrollment List
-{% endblock title %}
+  Course Enrollment List
+{% endblock %}
 
 {% block body %}
-    <h1>Course Enrollment List</h1>
-    <div class="table-responsive"><table class="table table-hover align-middle">
-        <thead>
-            <tr>
-                <th>SL</th>
-                <th>Student Name</th>
-                <th>Course Name</th>
-                <th>Course Fee</th>
-                <th>Paid</th>
-                {% if request.user.user_type == 'Admin' %}
-                    <th>Action</th>
-                {% endif %}
-            </tr>
-        </thead>
-        <tbody>
-            
-            {% for data in enrolled_data  %}
-                <tr>
-                    <td>{{forloop.counter}}</td>
-                    <td>{{data.student.name}}</td>
-                    <td>{{data.course.title}}</td>
-                    <td>{{data.admission_fee}}</td>
-                    <td>{{data.pay}}</td>
-                    
-                    {% if request.user.user_type == 'Admin' %}
-                        <td>
-                            <a href="{% url 'edit_enroll_info' data.id %}" class="btn btn-sm btn-warning">Edit</a>
-                            <form action="{% url 'delete_enroll_info' data.id %}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this student?');">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                            </form>
-                        </td>
-                    {% endif %}
-                </tr>
-            {% endfor %}
-                
-        </tbody>
-    </table></div>
-
+  <div class="page-head">
+    <div>
+      <h1>Course Enrollment List</h1>
+      <p class="sub">Student enrollments with fees and payments</p>
+    </div>
     {% if request.user.user_type == 'Admin' %}
-        <a href="{% url 'enroll_new_student' %}" class="btn btn-success">Enroll New Student</a>
+      <a href="{% url 'enroll_new_student' %}" class="btn btn-primary"><i class="bi bi-plus-lg"></i>Enroll New Student</a>
     {% endif %}
-{% endblock body %}
-
+  </div>
+  <div class="table-responsive table-wrap">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>SL</th>
+          <th>Student Name</th>
+          <th>Course Name</th>
+          <th>Course Fee</th>
+          <th>Paid</th>
+          {% if request.user.user_type == 'Admin' %}
+            <th class="text-end">Action</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for data in enrolled_data %}
+          <tr>
+            <td class="text-muted">{{ forloop.counter }}</td>
+            <td class="name">{{ data.student.name }}</td>
+            <td>{{ data.course.title }}</td>
+            <td>{{ data.admission_fee }}</td>
+            <td>
+              <span class="pill pill-ok">{{ data.pay }}</span>
+            </td>
+            {% if request.user.user_type == 'Admin' %}
+              <td>
+                <div class="actions">
+                  <a href="{% url 'edit_enroll_info' data.id %}" class="btn btn-sm btn-soft btn-soft-edit"><i class="bi bi-pencil-square"></i>Edit</a>
+                  <form action="{% url 'delete_enroll_info' data.id %}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this enrollment?');">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-soft btn-soft-danger"><i class="bi bi-trash3"></i>Delete</button>
+                  </form>
+                </div>
+              </td>
+            {% endif %}
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="6" class="empty">
+              <i class="bi bi-journal-check"></i>No enrollments yet.
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

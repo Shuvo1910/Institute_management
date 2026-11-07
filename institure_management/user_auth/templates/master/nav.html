@@ -1,32 +1,60 @@
-<nav class="navbar navbar-expand-lg">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'dashboard_view' %}"><i class="bi bi-mortarboard-fill me-2"></i>Uni.</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
-        {% if request.user.is_authenticated %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'dashboard_view' %}"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'course_list' %}"><i class="bi bi-book me-1"></i>Courses</a></li>
-          {% if request.user.user_type == 'Admin' %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'students_list' %}">Students</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'teachers_list' %}">Teachers</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'course_category' %}">Categories</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'course_enroll_list' %}">Enrolled</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'assign_teacher_list' %}">Assigned</a></li>
+{% with current=request.resolver_match.url_name %}
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'dashboard_view' %}"><span class="brand-mark"><i class="bi bi-mortarboard-fill"></i></span>Uni.</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link {% if current == 'dashboard_view' %}active{% endif %}" href="{% url 'dashboard_view' %}"><i class="bi bi-speedometer2"></i>Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if current == 'course_list' or current == 'add_course' or current == 'edit_course' %}active{% endif %}" href="{% url 'course_list' %}"><i class="bi bi-book"></i>Courses</a>
+            </li>
+            {% if request.user.user_type == 'Admin' %}
+              <li class="nav-item">
+                <a class="nav-link {% if current == 'students_list' or current == 'add_students' or current == 'edit_student' %}active{% endif %}" href="{% url 'students_list' %}"><i class="bi bi-people"></i>Students</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if current == 'teachers_list' or current == 'add_teachers' or current == 'edit_teachers' %}active{% endif %}" href="{% url 'teachers_list' %}"><i class="bi bi-person-workspace"></i>Teachers</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if current == 'course_category' or current == 'add_category' or current == 'edit_category' %}active{% endif %}" href="{% url 'course_category' %}"><i class="bi bi-tags"></i>Categories</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if current == 'course_enroll_list' or current == 'enroll_new_student' or current == 'edit_enroll_info' %}active{% endif %}" href="{% url 'course_enroll_list' %}"><i class="bi bi-journal-check"></i>Enrolled</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if current == 'assign_teacher_list' or current == 'assign_new_teacher' or current == 'edit_assign_teacher_info' %}active{% endif %}" href="{% url 'assign_teacher_list' %}"><i class="bi bi-diagram-3"></i>Assigned</a>
+              </li>
+            {% endif %}
+            {% if request.user.user_type == 'Student' %}
+              <li class="nav-item">
+                <a class="nav-link {% if current == 'course_enroll_list' %}active{% endif %}" href="{% url 'course_enroll_list' %}"><i class="bi bi-journal-check"></i>My Courses</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if current == 'student_profile_view' or current == 'update_student_profile' %}active{% endif %}" href="{% url 'student_profile_view' %}"><i class="bi bi-person-circle"></i>Profile</a>
+              </li>
+            {% endif %}
+            {% if request.user.user_type == 'Teacher' %}
+              <li class="nav-item">
+                <a class="nav-link {% if current == 'assign_teacher_list' %}active{% endif %}" href="{% url 'assign_teacher_list' %}"><i class="bi bi-journal-check"></i>My Classes</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if current == 'teacher_profile_view' or current == 'update_teacher_profile' %}active{% endif %}" href="{% url 'teacher_profile_view' %}"><i class="bi bi-person-circle"></i>Profile</a>
+              </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link nav-logout" href="{% url 'logout_view' %}"><i class="bi bi-box-arrow-right"></i>Logout</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link {% if current == 'login_view' %}active{% endif %}" href="{% url 'login_view' %}"><i class="bi bi-box-arrow-in-right"></i>Login</a>
+            </li>
           {% endif %}
-          {% if request.user.user_type == 'Student' %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'course_enroll_list' %}">My Courses</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'student_profile_view' %}">Profile</a></li>
-          {% endif %}
-          {% if request.user.user_type == 'Teacher' %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'assign_teacher_list' %}">My Courses</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'teacher_profile_view' %}">Profile</a></li>
-          {% endif %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'logout_view' %}"><i class="bi bi-box-arrow-right me-1"></i>Logout</a></li>
-        {% else %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'login_view' %}">Login</a></li>
-        {% endif %}
-      </ul>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+{% endwith %}

@@ -2,47 +2,57 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-    Assigned Teacher List
-{% endblock title %}
+  Assigned Teacher List
+{% endblock %}
 
 {% block body %}
-    <h1>Assigned Teacher List</h1>
-    <div class="table-responsive"><table class="table table-hover align-middle">
-        <thead>
-            <tr>
-                <th>SL</th>
-                <th>Teacher Name</th>
-                <th>Course Name</th>
-                {% if request.user.user_type == 'Admin' %}
-                    <th>Action</th>
-                {% endif %}
-            </tr>
-        </thead>
-        <tbody>
-            
-            {% for data in assigned_data %}
-                <tr>
-                    <td>{{forloop.counter}}</td>
-                    <td>{{data.teacher.name}}</td>
-                    <td>{{data.course.title}}</td>
-                    
-                    {% if request.user.user_type == 'Admin' %}
-                        <td>
-                            <a href="{% url 'edit_assign_teacher_info' data.id %}" class="btn btn-sm btn-warning">Edit</a>
-                            <form action="{% url 'delete_assign_teacher_info' data.id %}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this teacher assignment?');">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                            </form>
-                        </td>
-                    {% endif %}
-                </tr>
-            {% endfor %}
-                
-        </tbody>
-    </table></div>
-
+  <div class="page-head">
+    <div>
+      <h1>Assigned Teacher List</h1>
+      <p class="sub">Which teacher is teaching which course</p>
+    </div>
     {% if request.user.user_type == 'Admin' %}
-        <a href="{% url 'assign_new_teacher' %}" class="btn btn-success">Assign New Teacher</a>
+      <a href="{% url 'assign_new_teacher' %}" class="btn btn-primary"><i class="bi bi-plus-lg"></i>Assign New Teacher</a>
     {% endif %}
-{% endblock body %}
-
+  </div>
+  <div class="table-responsive table-wrap">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>SL</th>
+          <th>Teacher Name</th>
+          <th>Course Name</th>
+          {% if request.user.user_type == 'Admin' %}
+            <th class="text-end">Action</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for data in assigned_data %}
+          <tr>
+            <td class="text-muted">{{ forloop.counter }}</td>
+            <td class="name">{{ data.teacher.name }}</td>
+            <td>{{ data.course.title }}</td>
+            {% if request.user.user_type == 'Admin' %}
+              <td>
+                <div class="actions">
+                  <a href="{% url 'edit_assign_teacher_info' data.id %}" class="btn btn-sm btn-soft btn-soft-edit"><i class="bi bi-pencil-square"></i>Edit</a>
+                  <form action="{% url 'delete_assign_teacher_info' data.id %}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this teacher assignment?');">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-soft btn-soft-danger"><i class="bi bi-trash3"></i>Delete</button>
+                  </form>
+                </div>
+              </td>
+            {% endif %}
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4" class="empty">
+              <i class="bi bi-diagram-3"></i>No teacher assignments yet.
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
